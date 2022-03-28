@@ -22,7 +22,21 @@ const userController = {
         .catch(err => res.status(404).json(err))
     },
 
+    // ADD A NEW USER
+    createUser({ body }, res) {
+        User.create({ username: body.username, email: body.email })
+        .then(dbUserData => res.json(dbUserData))
+        .catch(err => res.status(400).json(err))
+    },
     
+    // UPDATE USER INFORMATION
+
+    // DELETE A USER
+
+    // ADD A FRIEND TO A USER
+
+    // REMOVE A FRIEND FROM A USER
+
 };
 
 module.exports = userController;
