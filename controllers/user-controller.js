@@ -28,10 +28,26 @@ const userController = {
         .then(dbUserData => res.json(dbUserData))
         .catch(err => res.status(400).json(err))
     },
-    
+
     // UPDATE USER INFORMATION
+    updateUser({ params, body }, res) {
+        User.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
+        .then(dbUserData => dbUserData ? res.json(dbUserData) : res.status(404).json({ message: user404Message(params.id) }))
+        .catch(err => res.status(400).json(err))
+    },
 
     // DELETE A USER
+    deleteUser({ params }, res) {
+        User.findOneAndDelete({ _id: params.id })
+        .then(dbUserData => {
+            if (!dbUserData) {
+                return res.status(404).json({ message: user404Message(params.id) })
+            }
+            //DELETE ASSOCIATED THOUGHTS
+
+        })
+        .catch(err => res.status(400).json(err))
+    },
 
     // ADD A FRIEND TO A USER
 
