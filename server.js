@@ -8,7 +8,7 @@
 // Mongoose
     const mongoose = require('mongoose')
 
-    mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb', {
+    mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/my-network', {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
