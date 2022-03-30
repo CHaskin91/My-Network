@@ -1,4 +1,6 @@
-const { User } = require('../models');
+const { User, Thought } = require('../models');
+const user404Message = (id) => `User with ID: ${id} not found!`
+const user204Message = (id) => `User with ID: ${id} has been deleted`
 
 const userController = {
     // the functions will go in here as methods
@@ -44,7 +46,7 @@ const userController = {
                 return res.status(404).json({ message: user404Message(params.id) })
             }
             //DELETE ASSOCIATED THOUGHTS
-
+            Thought.deleteMany({ username: dbUserData.username }).then(deletedData => deletedData ? res.json({ message: user204Message(params.id)}) : res.status(404).json({ message: user404Message(params.id) }))
         })
         .catch(err => res.status(400).json(err))
     },
