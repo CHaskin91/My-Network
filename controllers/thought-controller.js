@@ -36,4 +36,13 @@ const thoughtController = {
         .then(dbThoughtData => dbThoughtData ? res.json(dbThoughtData) : res.status(404).json({ message: thought404Message(params.id) }))
         .catch(err => res.status(400).json(err))
     },
+
+    // DELETE THOUGHT
+    deleteThought({ params }, res) {
+        Thought.findOneAndDelete({ _id: params.id })
+        .then(dbThoughtData => dbThoughtData ? res.json(thought200Message(dbThoughtData._id)) : res.status(404).json({ message: thought404Message(params.id) }))
+        .catch(err => res.status(404).json(err))
+    },
+
+    // ADD A REACTION TO A THOUGHT
 }
