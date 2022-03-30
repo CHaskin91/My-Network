@@ -45,4 +45,15 @@ const thoughtController = {
     },
 
     // ADD A REACTION TO A THOUGHT
+    createReaction({ params, body }, res) {
+        Thought.findOneAndUpdate(
+            { _id: params.thoughtId },
+            { $push: { reactions: { reactionBody: body.reactionBody, username: body.username } } },
+            { new: true, runValidators: true })
+        .then(dbThoughtData => dbThoughtData ? res.json(dbThoughtData) : res.status(404).json({ message: thought404Message(params.id) }))
+        .catch(err => res.status(400).json(err))
+    },
+
+    // REMOVE A REACTION FROM A THOUGHT
+    
 }
