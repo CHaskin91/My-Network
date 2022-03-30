@@ -1,4 +1,7 @@
 const { Thought, User } = require('../models')
+const thought404Message = (id) => `Thought with ID: ${id} not found!`
+const thought200Message = (id) => `Thought with ID: ${id} has been deleted!`
+const reaction200Message = (id) => `Reaction with ID: ${id} has been deleted!`
 
 const thoughtController = {
     // GET ALL THOUGHTS
@@ -27,5 +30,10 @@ const thoughtController = {
         .catch(err => res.status(400).json(err))
     },
 
-    
+    // UPDATE THOUGHT INFORMATION
+    updateThought({ params, body }, res) {
+        Thought.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
+        .then(dbThoughtData => dbThoughtData ? res.json(dbThoughtData) : res.status(404).json({ message: thought404Message(params.id) }))
+        .catch(err => res.status(400).json(err))
+    },
 }
