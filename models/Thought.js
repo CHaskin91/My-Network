@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose')
 const { format_date } = require('../utils/formatter')
 
 const reactionSchema = new Schema(
@@ -30,18 +30,18 @@ const reactionSchema = new Schema(
     }
 )
 
-const thoughtSchema = new Schema(
+const ThoughtSchema = new Schema(
     {
         thoughtText: {
             type: String,
             required: true,
-            minLength: 1,
+            minlength: 1,
             maxLength: 280
         },
         createdAt: {
             type: Date,
             default: Date.now,
-            get: (time) => format_date(time)
+            get: (time) => format_date(time) 
         },
         username: {
             type: String,
@@ -52,16 +52,16 @@ const thoughtSchema = new Schema(
     {
         toJSON: {
             virtuals: true,
-            getters: true
+            getters: true 
         },
         id: false
     }
 )
 
-thoughtSchema.virtual('reactionCount').get(function() {
+ThoughtSchema.virtual('reactionCount').get(function() {
     return this.reactions.length;
 });
 
-const Thought = model('Thought', thoughtSchema)
+const Thought = model('Thought', ThoughtSchema)
 
 module.exports = Thought
