@@ -13,6 +13,14 @@
         useUnifiedTopology: true
     })
 
+    mongoose.connection.on('connected', () =>
+    console.log('Connected to MongoDB Endpoint')
+    );
+
+    mongoose.connection.on('error', (err) =>
+    console.log(`MONGOOSE DISCONNECTED ERROR: ${err}`)
+    );
+
     // Use this to log mongo queries being executed!
     mongoose.set('debug', true);
 
